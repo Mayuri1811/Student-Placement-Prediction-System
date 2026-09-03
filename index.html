@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Placement Prediction System</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}.hidden{display:none!important}button,input,textarea,select{font-family:inherit}button{cursor:pointer}.login-page{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#17234a,#5269c9);padding:20px}.login-card{width:430px;background:#fff;padding:35px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.25);text-align:center}.logo{width:70px;height:70px;margin:auto;background:#eef1ff;border-radius:18px;display:flex;justify-content:center;align-items:center;font-size:35px}.login-card h1{margin-top:12px}.login-card p{color:#777;margin:7px 0 20px}.tabs{display:flex;gap:5px;background:#f1f3f8;padding:5px;border-radius:10px;margin-bottom:20px}.tab{flex:1;border:0;padding:11px;border-radius:8px;background:transparent;font-weight:bold}.tab.active{background:#fff;color:#5269c9;box-shadow:0 1px 5px rgba(0,0,0,.08)}.login-card label,.modal-card label,.form-card label{display:block;text-align:left;font-size:13px;font-weight:bold;margin:12px 0 5px}.login-card input,.modal-card input{width:100%;padding:12px;border:1px solid #d8deea;border-radius:9px;outline:none}.primary{border:0;background:#5269c9;color:#fff;padding:12px 18px;border-radius:9px;font-weight:bold}.primary:hover{background:#4057b7}.full-btn{width:100%;margin-top:15px}.switch{margin-top:15px;font-size:13px;color:#777;cursor:pointer}.switch span{color:#5269c9;font-weight:bold}.message{margin-top:12px;padding:10px;border-radius:8px;font-size:13px}.success{background:#eaf8ef;color:#16723b}.error{background:#fdecec;color:#a52222}.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;justify-content:center;align-items:center;z-index:1000}.modal-card{width:400px;background:#fff;padding:30px;border-radius:18px}.modal-card h2{text-align:center;margin-bottom:5px}.modal-card p{text-align:center;color:#777;font-size:13px;margin-bottom:15px}.modal-buttons{display:flex;gap:10px;margin-top:15px}.modal-buttons button{flex:1}.cancel{border:0;background:#eee;padding:12px;border-radius:9px}.app{min-height:100vh;display:flex}.sidebar{width:245px;position:fixed;left:0;top:0;bottom:0;background:#17234a;color:#fff;padding:22px 15px;display:flex;flex-direction:column}.brand{font-size:20px;font-weight:bold;padding:10px;margin-bottom:20px}.nav{display:flex;flex-direction:column;gap:6px}.nav button{border:0;background:transparent;color:#cbd3ed;padding:13px;text-align:left;border-radius:9px}.nav button:hover,.nav button.active{background:#5269c9;color:#fff}.logout{margin-top:auto;border:0;background:#2b3968;color:#fff;padding:13px;border-radius:9px}.main{margin-left:245px;width:calc(100% - 245px);padding:25px 35px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.topbar p{color:#777;font-size:13px;margin-top:4px}.role{background:#fff;padding:10px 15px;border-radius:20px;font-weight:bold}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(120deg,#5269c9,#7286e0);color:#fff;padding:30px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.hero button{background:#fff;color:#5269c9;border:0;padding:12px 18px;border-radius:9px;font-weight:bold}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}.stat,.card,.admin-stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 4px 18px rgba(0,0,0,.06)}.stat h2{margin:8px 0}.sub{color:#777;font-size:13px;margin:5px 0 18px}.table-box{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1100px}th,td{padding:12px;border-bottom:1px solid #edf0f5;text-align:left;font-size:13px;vertical-align:top}th{white-space:nowrap;color:#626b7d}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}.form-card input,.form-card textarea,.form-card select{width:100%;padding:11px;border:1px solid #d8deea;border-radius:9px;outline:none}.form-card textarea{min-height:100px;resize:vertical}.full{grid-column:1/-1;margin-top:10px}.result{text-align:center;padding:50px}.result-icon{font-size:65px}.probability{font-size:45px;font-weight:bold;color:#5269c9;margin:20px}.admin-header{background:linear-gradient(120deg,#17234a,#5269c9);color:#fff;padding:25px;border-radius:16px;margin-bottom:20px}.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:20px}.admin-stat h2{margin-top:8px}.placed{color:green;font-weight:bold}.notplaced{color:red;font-weight:bold}.status-box{padding:15px;background:#f4f7fb;border-radius:10px;margin-bottom:20px}.danger{background:#d9534f;color:#fff;border:0;padding:8px 12px;border-radius:7px}.admin-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.small-btn{padding:9px 13px;border:0;border-radius:8px;background:#5269c9;color:#fff}.info-box{background:#f7f8fc;padding:15px;border-radius:10px;margin-bottom:20px}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.bar-chart{height:260px;display:flex;align-items:flex-end;justify-content:center;gap:55px;border-bottom:1px solid #ddd;padding:20px}.bar-wrap{text-align:center}.bar{width:70px;background:#5269c9;border-radius:8px 8px 0 0;min-height:5px}.bar.alt{background:#9aa7d9}.bar-label{margin-top:8px;font-size:12px}.close-x{float:right;border:0;background:none;font-size:22px}.muted{color:#777}@media(max-width:900px){.sidebar{width:200px}.main{margin-left:200px;width:calc(100% - 200px)}.admin-stats{grid-template-columns:1fr 1fr}.chart-grid{grid-template-columns:1fr}}@media(max-width:650px){.app{display:block}.sidebar{position:relative;width:100%}.main{margin-left:0;width:100%;padding:18px}.nav{flex-direction:row;overflow:auto}.stats,.admin-stats,.form-grid{grid-template-columns:1fr}.hero{display:block}.hero button{margin-top:15px}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="logo">🎓</div>
+    <h1>Placement System</h1>
+    <p>Student Placement Prediction System</p>
+    <div class="tabs">
+      <button type="button" id="studentTab" class="tab active" onclick="showStudentAuth()">Student</button>
+      <button type="button" id="adminTab" class="tab" onclick="openAdminLogin()">Admin</button>
+    </div>
+
+    <div id="studentAuth">
+      <form id="loginForm" onsubmit="handleStudentLogin(event)">
+        <label>Username</label><input id="loginUsername" required placeholder="Enter username">
+        <label>Password</label><input id="loginPassword" type="password" required placeholder="Enter password">
+        <button class="primary full-btn" type="submit">Student Login</button>
+        <div class="switch" onclick="showRegister()">New Student? <span>Register Here</span></div>
+        <div id="loginMessage"></div>
+      </form>
+
+      <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+        <label>Full Name</label><input id="regName" required placeholder="Enter full name">
+        <label>Email</label><input id="regEmail" type="email" required placeholder="Enter email">
+        <label>Username</label><input id="regUsername" required placeholder="Create username">
+        <label>Password</label><input id="regPassword" type="password" required minlength="4" placeholder="Create password">
+        <button class="primary full-btn" type="submit">Register Account</button>
+        <div class="switch" onclick="showStudentAuth()"><span>Back to Login</span></div>
+        <div id="registerMessage"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="adminModal" class="modal hidden" aria-hidden="true">
+  <div class="modal-card">
+    <button class="close-x" onclick="closeAdminLogin()">×</button>
+    <h2>Admin Login</h2><p>Enter Admin Credentials</p>
+    <form onsubmit="handleAdminLogin(event)">
+      <label>Admin Username</label><input id="adminUsername" required placeholder="Enter admin username">
+      <label>Admin Password</label><input id="adminPassword" type="password" required placeholder="Enter admin password">
+      <div class="modal-buttons"><button type="button" class="cancel" onclick="closeAdminLogin()">Cancel</button><button type="submit" class="primary">Login</button></div>
+      <div id="adminMessage"></div>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand">🎓 Placement AI</div>
+    <div class="nav">
+      <button id="dashboardNav" class="active" onclick="showPage('dashboard')">📊 Dashboard</button>
+      <button id="studentNav" onclick="showPage('student')">👨‍🎓 Student Form</button>
+      <button id="predictionNav" onclick="showPage('prediction')">🤖 Prediction</button>
+      <button id="resultNav" onclick="showPage('result')">✅ Result</button>
+      <button id="adminNav" class="hidden" onclick="showPage('admin')">⚙️ Admin Panel</button>
+      <button id="chartsNav" class="hidden" onclick="showPage('charts')">📈 Admin Charts</button>
+    </div>
+    <button class="logout" onclick="logout()">↪ Logout</button>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div><h2 id="pageTitle">Dashboard</h2><p>Student Placement Prediction System</p></div><div id="roleBadge" class="role">👤 Student</div></header>
+
+    <section id="dashboard" class="page active">
+      <div class="hero"><div><h1 id="welcomeTitle">Welcome to Student Dashboard</h1><p id="welcomeText">Check your placement prediction and student details.</p></div><button onclick="showPage('student')">+ New Prediction</button></div>
+      <div class="stats">
+        <div class="stat"><div>👨‍🎓</div><h2 id="studentCount">0</h2><p>My Predictions</p></div>
+        <div class="stat"><div>📚</div><h2 id="myCGPA">-</h2><p>Latest CGPA</p></div>
+        <div class="stat"><div>🎯</div><h2 id="myStatus">-</h2><p>Latest Result</p></div>
+      </div>
+      <div class="card"><h3>My Prediction Records</h3><br><div class="table-box"><table><thead><tr><th>Full Name</th><th>Gender</th><th>Student ID</th><th>CGPA</th><th>Percentage</th><th>Technical Skills</th><th>Result</th><th>Prediction Date</th></tr></thead><tbody id="studentRecords"><tr><td colspan="8">No records found.</td></tr></tbody></table></div></div>
+    </section>
+
+    <section id="student" class="page">
+      <div class="card form-card"><h2>Student Details</h2><p class="sub">Enter academic and skill information for ML prediction.</p>
+        <form id="studentForm" class="form-grid" onsubmit="handleFormSubmit(event)">
+          <div><label>Student Full Name</label><input id="sName" required placeholder="Enter full name"></div>
+          <div><label>Student ID</label><input id="sId" required placeholder="STU001"></div>
+          <div><label>Email</label><input id="sEmail" type="email" required placeholder="Enter email"></div>
+          <div><label>Gender</label><select id="sGender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div><label>Age</label><input id="sAge" type="number" required min="17" max="50" placeholder="17 - 50"></div>
+          <div><label>CGPA</label><input id="sCgpa" type="number" required min="0" max="10" step="0.01" placeholder="0 - 10"></div>
+          <div><label>Percentage</label><input id="sPercentage" type="number" required min="0" max="100" step="0.01" placeholder="0 - 100"></div>
+          <div><label>Communication Skills</label><textarea id="sCommunication" required placeholder="Example: Good communication, presentation, GD, interview skills"></textarea></div>
+          <div><label>Technical Skills</label><textarea id="sTechnical" required placeholder="Example: HTML, CSS, JavaScript, Python, SQL"></textarea></div>
+          <div><label>Projects Completed</label><input id="sProjects" type="number" required min="0" placeholder="Number of projects"></div>
+          <div><label>Internship</label><select id="sInternship"><option value="1">Yes</option><option value="0">No</option></select></div>
+          <div class="full"><button class="primary" type="submit">Continue to ML Prediction →</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="prediction" class="page"><div class="card"><h2>🤖 Machine Learning Prediction</h2><p class="sub">The student data will be sent to the Python Logistic Regression model.</p><div id="summary" class="stats"></div><div id="predictionStatus" class="status-box">Ready for prediction.</div><button id="predictButton" class="primary" onclick="makePrediction()">🤖 Predict Using ML Model</button></div></section>
+
+    <section id="result" class="page"><div class="card result"><div id="resultIcon" class="result-icon">🎯</div><h1 id="resultTitle">No Prediction Yet</h1><p id="resultText">Complete the student form first.</p><div id="probability" class="probability">-</div><p id="modelText"></p><br><button class="primary" onclick="showPage('student')">New Prediction</button></div></section>
+
+    <section id="admin" class="page">
+      <div class="admin-header"><h1>👑 Admin Control Panel</h1><p>View complete student records, registration and login details.</p></div>
+      <div class="admin-stats"><div class="admin-stat"><p>👨‍🎓 Total Students</p><h2 id="adminTotal">0</h2></div><div class="admin-stat"><p>🟢 Placed</p><h2 id="adminPlaced">0</h2></div><div class="admin-stat"><p>🔴 Not Placed</p><h2 id="adminNotPlaced">0</h2></div><div class="admin-stat"><p>📊 Placement Rate</p><h2 id="adminRate">0%</h2></div></div>
+      <div class="card"><div class="admin-toolbar"><div><h3>All Student Placement Records</h3><p class="sub">Admin can see Full Name + Gender + registration/login dates.</p></div><button class="small-btn" onclick="fetchAdminData()">↻ Refresh</button></div><div class="table-box"><table><thead><tr><th>Full Name</th><th>Gender</th><th>Student ID</th><th>Email</th><th>Age</th><th>CGPA</th><th>Percentage</th><th>Communication</th><th>Technical Skills</th><th>Projects</th><th>Internship</th><th>Result</th><th>Probability</th><th>Registration Date</th><th>Login Date</th><th>Prediction Date</th><th>Action</th></tr></thead><tbody id="adminRecordsBody"><tr><td colspan="17">No records available.</td></tr></tbody></table></div></div>
+      <br><div class="card"><h3>Registered Users</h3><br><div class="table-box"><table><thead><tr><th>Full Name</th><th>Email</th><th>Username</th><th>Registration Date</th><th>Last Login</th></tr></thead><tbody id="usersBody"><tr><td colspan="5">No users.</td></tr></tbody></table></div></div>
+    </section>
+
+    <section id="charts" class="page"><div class="admin-header"><h1>📈 Admin Charts</h1><p>Placement summary from database records.</p></div><div class="chart-grid"><div class="card"><h3>Placement Distribution</h3><div id="placementChart" class="bar-chart"></div></div><div class="card"><h3>Recent CGPA</h3><div id="cgpaChart" class="bar-chart"></div></div></div></section>
+  </main>
+</div>
+
+<script>
+const API_URL = "http://127.0.0.1:5000";
+let currentUser = null;
+let currentUserRole = null;
+let currentStudent = null;
+
+function $(id){return document.getElementById(id)}
+function escapeHTML(v){return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function message(id,text,type){$(id).innerHTML=`<div class="message ${type}">${escapeHTML(text)}</div>`}
+function now(){return new Date().toLocaleString('en-IN',{hour12:false})}
+
+function showStudentAuth(){
+  $('studentAuth').classList.remove('hidden'); $('loginForm').classList.remove('hidden'); $('registerForm').classList.add('hidden');
+  $('studentTab').classList.add('active'); $('adminTab').classList.remove('active');
+}
+function showRegister(){ $('loginForm').classList.add('hidden'); $('registerForm').classList.remove('hidden'); }
+function openAdminLogin(){ $('adminTab').classList.add('active'); $('studentTab').classList.remove('active'); $('adminModal').classList.remove('hidden'); $('adminModal').setAttribute('aria-hidden','false'); $('adminUsername').focus(); }
+function closeAdminLogin(){ $('adminModal').classList.add('hidden'); $('adminModal').setAttribute('aria-hidden','true'); $('adminPassword').value=''; $('adminMessage').innerHTML=''; }
+
+async function handleRegister(e) {
+    e.preventDefault();
+
+    const fullName = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const username = document.getElementById("regUsername").value.trim();
+    const password = document.getElementById("regPassword").value;
+
+    if (!fullName || !email || !username || !password) {
+        message(
+            "registerMessage",
+            "Please fill all registration fields.",
+            "error"
+        );
+        return;
+    }
+
+    const data = {
+        full_name: fullName,
+        name: fullName,
+        email: email,
+        username: username,
+        password: password
+    };
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+
+            message(
+                "registerMessage",
+                result.message || "Registration failed.",
+                "error"
+            );
+
+            return;
+        }
+
+        message(
+            "registerMessage",
+            "Registration successful! Please login.",
+            "success"
+        );
+
+        document.getElementById("regPassword").value = "";
+
+        setTimeout(function () {
+            showStudentAuth();
+
+            document.getElementById("loginUsername").value =
+                username;
+
+            document.getElementById("loginPassword").focus();
+
+        }, 800);
+
+    } catch (error) {
+
+        console.error(error);
+
+        message(
+            "registerMessage",
+            "Cannot connect to Flask backend. Start app.py first.",
+            "error"
+        );
+    }
+}
+
+async function handleStudentLogin(e) {
+    e.preventDefault();
+
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    if (!username || !password) {
+        message(
+            "loginMessage",
+            "Please enter username and password.",
+            "error"
+        );
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            API_URL + "/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+
+            message(
+                "loginMessage",
+                result.message || "Invalid login.",
+                "error"
+            );
+
+            return;
+        }
+
+        currentUser = result.user;
+        currentUserRole = "student";
+
+        enterApp();
+
+        document.getElementById("sName").value =
+            currentUser.name || currentUser.full_name || "";
+
+        document.getElementById("sEmail").value =
+            currentUser.email || "";
+
+        await loadMyRecords();
+
+    } catch (error) {
+
+        console.error(error);
+
+        message(
+            "loginMessage",
+            "Cannot connect to Flask backend. Start app.py first.",
+            "error"
+        );
+    }
+}
+
+async function handleAdminLogin(e){
+  e.preventDefault();
+  try{
+    const r=await fetch(API_URL+'/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:$('adminUsername').value.trim(),password:$('adminPassword').value})}); const j=await r.json();
+    if(!j.success){message('adminMessage',j.message||'Invalid admin credentials.','error');return}
+    currentUser=j.admin; currentUserRole='admin'; closeAdminLogin(); enterApp(); $('roleBadge').textContent='👑 Admin'; $('welcomeTitle').textContent='Welcome Admin'; $('welcomeText').textContent='Manage student placement records and reports.'; $('adminNav').classList.remove('hidden'); $('chartsNav').classList.remove('hidden'); await fetchAdminData();
+  }catch(err){message('adminMessage','Cannot connect to Flask backend. Start app.py and try again.','error')}
+}
+
+function enterApp(){ $('loginPage').classList.add('hidden'); $('app').classList.remove('hidden'); showPage('dashboard'); }
+function showPage(pageId){
+  if((pageId==='admin'||pageId==='charts')&&currentUserRole!=='admin'){alert('Admin access only.');return}
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  const p=$(pageId); if(p)p.classList.add('active'); const n=$(pageId+'Nav'); if(n)n.classList.add('active'); $('pageTitle').textContent=pageId==='admin'?'Admin Panel':pageId==='charts'?'Admin Charts':pageId.charAt(0).toUpperCase()+pageId.slice(1); window.scrollTo({top:0,behavior:'smooth'});
+  if(pageId==='admin'&&currentUserRole==='admin')fetchAdminData();
+  if(pageId==='charts'&&currentUserRole==='admin')fetchAdminData();
+}
+
+function handleFormSubmit(e){
+  e.preventDefault();
+  currentStudent={name:$('sName').value.trim(),student_id:$('sId').value.trim(),email:$('sEmail').value.trim(),gender:$('sGender').value,age:Number($('sAge').value),cgpa:Number($('sCgpa').value),percentage:Number($('sPercentage').value),communication:$('sCommunication').value.trim(),technical:$('sTechnical').value.trim(),projects:Number($('sProjects').value),internship:Number($('sInternship').value),username:currentUser?.username||''};
+  $('summary').innerHTML=`<div class="stat"><h3>${escapeHTML(currentStudent.name)}</h3><p>Full Name</p></div><div class="stat"><h3>${escapeHTML(currentStudent.gender)}</h3><p>Gender</p></div><div class="stat"><h3>${currentStudent.cgpa}</h3><p>CGPA</p></div><div class="stat"><h3>${currentStudent.percentage}%</h3><p>Percentage</p></div>`;
+  $('predictionStatus').textContent='Form submitted! Click below to run the ML model.'; showPage('prediction');
+}
+
+async function makePrediction(){
+  if(!currentStudent){alert('Please submit the student form first.');showPage('student');return}
+  const b=$('predictButton'); b.disabled=true; b.textContent='⏳ Processing...'; $('predictionStatus').textContent='Sending student data to Flask + database...';
+  try{
+    const r=await fetch(API_URL+'/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(currentStudent)}); const j=await r.json();
+    if(!j.success)throw new Error(j.message||'Prediction failed');
+    currentStudent.prediction=j.prediction; currentStudent.probability=j.probability; currentStudent.prediction_date=j.prediction_date||now(); currentStudent.model=j.model||'Logistic Regression';
+    renderResult(j.prediction,j.probability,j.model||'Logistic Regression');
+    await saveStudent(); await loadMyRecords();
+  }catch(err){$('predictionStatus').textContent='❌ '+err.message;alert('Prediction error: '+err.message)}finally{b.disabled=false;b.textContent='🤖 Predict Using ML Model'}
+}
+
+async function saveStudent(){
+  const payload={...currentStudent,registration_date:currentUser?.registration_date||'',login_date:currentUser?.last_login||now()};
+  const r=await fetch(API_URL+'/students',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); const j=await r.json(); if(!j.success)throw new Error(j.message||'Could not save student record');
+}
+function renderResult(pred,prob,model){const placed=String(pred).toLowerCase()==='placed';$('resultIcon').textContent=placed?'🎉':'📚';$('resultTitle').textContent=placed?'Student will be Placed':'Student will Not be Placed';$('resultText').textContent=placed?'The student shows a good placement readiness score.':'The student should improve academic and skill-related areas.';$('probability').textContent=prob+'%';$('modelText').textContent='Model: '+model;showPage('result')}
+
+async function loadMyRecords(){
+  if(!currentUser?.username)return;
+  try{const r=await fetch(API_URL+'/students/user/'+encodeURIComponent(currentUser.username));const rows=await r.json();
+    $('studentCount').textContent=rows.length; if(rows.length){const x=rows[0];$('myCGPA').textContent=x.cgpa??'-';$('myStatus').textContent=x.prediction??'-'}
+    $('studentRecords').innerHTML=rows.length?rows.map(x=>`<tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.gender)}</td><td>${escapeHTML(x.student_id)}</td><td>${escapeHTML(x.cgpa)}</td><td>${escapeHTML(x.percentage)}%</td><td>${escapeHTML(x.technical)}</td><td class="${String(x.prediction).toLowerCase()==='placed'?'placed':'notplaced'}">${escapeHTML(x.prediction)}</td><td>${escapeHTML(x.prediction_date)}</td></tr>`).join(''):'<tr><td colspan="8">No records found.</td></tr>';
+  }catch(e){console.error(e)}
+}
+
+async function fetchAdminData(){
+  if(currentUserRole!=='admin')return;
+  try{
+    const [sr,ur]=await Promise.all([fetch(API_URL+'/students'),fetch(API_URL+'/users')]); const students=await sr.json(); const users=await ur.json();
+    const placed=students.filter(x=>String(x.prediction).toLowerCase()==='placed').length; const notPlaced=students.length-placed; const rate=students.length?Math.round(placed/students.length*100):0;
+    $('adminTotal').textContent=students.length;$('adminPlaced').textContent=placed;$('adminNotPlaced').textContent=notPlaced;$('adminRate').textContent=rate+'%';
+    $('adminRecordsBody').innerHTML=students.length?students.map(x=>`<tr><td><b>${escapeHTML(x.name)}</b></td><td>${escapeHTML(x.gender||'-')}</td><td>${escapeHTML(x.student_id)}</td><td>${escapeHTML(x.email)}</td><td>${escapeHTML(x.age)}</td><td>${escapeHTML(x.cgpa)}</td><td>${escapeHTML(x.percentage)}%</td><td>${escapeHTML(x.communication)}</td><td>${escapeHTML(x.technical)}</td><td>${escapeHTML(x.projects)}</td><td>${Number(x.internship)===1?'Yes':'No'}</td><td class="${String(x.prediction).toLowerCase()==='placed'?'placed':'notplaced'}">${escapeHTML(x.prediction)}</td><td>${escapeHTML(x.probability)}%</td><td>${escapeHTML(x.registration_date||'-')}</td><td>${escapeHTML(x.login_date||'-')}</td><td>${escapeHTML(x.prediction_date||'-')}</td><td><button class="danger" onclick="deleteStudent(${Number(x.id)})">Delete</button></td></tr>`).join(''):'<tr><td colspan="17">No records available.</td></tr>';
+    $('usersBody').innerHTML=users.length?users.map(x=>`<tr><td><b>${escapeHTML(x.name)}</b></td><td>${escapeHTML(x.email)}</td><td>${escapeHTML(x.username)}</td><td>${escapeHTML(x.registration_date||'-')}</td><td>${escapeHTML(x.last_login||'-')}</td></tr>`).join(''):'<tr><td colspan="5">No users.</td></tr>';
+    drawCharts(students);
+  }catch(e){$('adminRecordsBody').innerHTML='<tr><td colspan="17">❌ Backend connection error. Make sure app.py is running.</td></tr>';console.error(e)}
+}
+async function deleteStudent(id){if(!confirm('Delete this student record?'))return;try{const r=await fetch(API_URL+'/students/'+id,{method:'DELETE'});const j=await r.json();alert(j.message||'Done');fetchAdminData()}catch(e){alert('Delete failed')}}
+function drawCharts(rows){const p=rows.filter(x=>String(x.prediction).toLowerCase()==='placed').length,n=rows.length-p;const total=Math.max(rows.length,1);$('placementChart').innerHTML=`<div class="bar-wrap"><div class="bar" style="height:${Math.max(p/total*200,5)}px"></div><div class="bar-label">Placed (${p})</div></div><div class="bar-wrap"><div class="bar alt" style="height:${Math.max(n/total*200,5)}px"></div><div class="bar-label">Not Placed (${n})</div></div>`;const recent=rows.slice(0,8).reverse();$('cgpaChart').innerHTML=recent.length?recent.map(x=>`<div class="bar-wrap"><div class="bar" style="height:${Math.max(Number(x.cgpa||0)/10*200,5)}px"></div><div class="bar-label">${escapeHTML(x.student_id||'Student')}</div></div>`).join(''):'<span class="muted">No data</span>'}
+function logout(){currentUser=null;currentUserRole=null;currentStudent=null;$('app').classList.add('hidden');$('loginPage').classList.remove('hidden');$('loginPassword').value='';$('adminNav').classList.add('hidden');$('chartsNav').classList.add('hidden');showStudentAuth()}
+</script>
+</body>
+</html>
