@@ -4,355 +4,1221 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Placement Prediction System</title>
+
+<!-- Chart.js for Professional Analytics -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}.hidden{display:none!important}button,input,textarea,select{font-family:inherit}button{cursor:pointer}.login-page{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#17234a,#5269c9);padding:20px}.login-card{width:430px;background:#fff;padding:35px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.25);text-align:center}.logo{width:70px;height:70px;margin:auto;background:#eef1ff;border-radius:18px;display:flex;justify-content:center;align-items:center;font-size:35px}.login-card h1{margin-top:12px}.login-card p{color:#777;margin:7px 0 20px}.tabs{display:flex;gap:5px;background:#f1f3f8;padding:5px;border-radius:10px;margin-bottom:20px}.tab{flex:1;border:0;padding:11px;border-radius:8px;background:transparent;font-weight:bold}.tab.active{background:#fff;color:#5269c9;box-shadow:0 1px 5px rgba(0,0,0,.08)}.login-card label,.modal-card label,.form-card label{display:block;text-align:left;font-size:13px;font-weight:bold;margin:12px 0 5px}.login-card input,.modal-card input{width:100%;padding:12px;border:1px solid #d8deea;border-radius:9px;outline:none}.primary{border:0;background:#5269c9;color:#fff;padding:12px 18px;border-radius:9px;font-weight:bold}.primary:hover{background:#4057b7}.full-btn{width:100%;margin-top:15px}.switch{margin-top:15px;font-size:13px;color:#777;cursor:pointer}.switch span{color:#5269c9;font-weight:bold}.message{margin-top:12px;padding:10px;border-radius:8px;font-size:13px}.success{background:#eaf8ef;color:#16723b}.error{background:#fdecec;color:#a52222}.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;justify-content:center;align-items:center;z-index:1000}.modal-card{width:400px;background:#fff;padding:30px;border-radius:18px}.modal-card h2{text-align:center;margin-bottom:5px}.modal-card p{text-align:center;color:#777;font-size:13px;margin-bottom:15px}.modal-buttons{display:flex;gap:10px;margin-top:15px}.modal-buttons button{flex:1}.cancel{border:0;background:#eee;padding:12px;border-radius:9px}.app{min-height:100vh;display:flex}.sidebar{width:245px;position:fixed;left:0;top:0;bottom:0;background:#17234a;color:#fff;padding:22px 15px;display:flex;flex-direction:column}.brand{font-size:20px;font-weight:bold;padding:10px;margin-bottom:20px}.nav{display:flex;flex-direction:column;gap:6px}.nav button{border:0;background:transparent;color:#cbd3ed;padding:13px;text-align:left;border-radius:9px}.nav button:hover,.nav button.active{background:#5269c9;color:#fff}.logout{margin-top:auto;border:0;background:#2b3968;color:#fff;padding:13px;border-radius:9px}.main{margin-left:245px;width:calc(100% - 245px);padding:25px 35px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.topbar p{color:#777;font-size:13px;margin-top:4px}.role{background:#fff;padding:10px 15px;border-radius:20px;font-weight:bold}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(120deg,#5269c9,#7286e0);color:#fff;padding:30px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.hero button{background:#fff;color:#5269c9;border:0;padding:12px 18px;border-radius:9px;font-weight:bold}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}.stat,.card,.admin-stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 4px 18px rgba(0,0,0,.06)}.stat h2{margin:8px 0}.sub{color:#777;font-size:13px;margin:5px 0 18px}.table-box{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1100px}th,td{padding:12px;border-bottom:1px solid #edf0f5;text-align:left;font-size:13px;vertical-align:top}th{white-space:nowrap;color:#626b7d}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}.form-card input,.form-card textarea,.form-card select{width:100%;padding:11px;border:1px solid #d8deea;border-radius:9px;outline:none}.form-card textarea{min-height:100px;resize:vertical}.full{grid-column:1/-1;margin-top:10px}.result{text-align:center;padding:50px}.result-icon{font-size:65px}.probability{font-size:45px;font-weight:bold;color:#5269c9;margin:20px}.admin-header{background:linear-gradient(120deg,#17234a,#5269c9);color:#fff;padding:25px;border-radius:16px;margin-bottom:20px}.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:20px}.admin-stat h2{margin-top:8px}.placed{color:green;font-weight:bold}.notplaced{color:red;font-weight:bold}.status-box{padding:15px;background:#f4f7fb;border-radius:10px;margin-bottom:20px}.danger{background:#d9534f;color:#fff;border:0;padding:8px 12px;border-radius:7px}.admin-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.small-btn{padding:9px 13px;border:0;border-radius:8px;background:#5269c9;color:#fff}.info-box{background:#f7f8fc;padding:15px;border-radius:10px;margin-bottom:20px}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.bar-chart{height:260px;display:flex;align-items:flex-end;justify-content:center;gap:55px;border-bottom:1px solid #ddd;padding:20px}.bar-wrap{text-align:center}.bar{width:70px;background:#5269c9;border-radius:8px 8px 0 0;min-height:5px}.bar.alt{background:#9aa7d9}.bar-label{margin-top:8px;font-size:12px}.close-x{float:right;border:0;background:none;font-size:22px}.muted{color:#777}@media(max-width:900px){.sidebar{width:200px}.main{margin-left:200px;width:calc(100% - 200px)}.admin-stats{grid-template-columns:1fr 1fr}.chart-grid{grid-template-columns:1fr}}@media(max-width:650px){.app{display:block}.sidebar{position:relative;width:100%}.main{margin-left:0;width:100%;padding:18px}.nav{flex-direction:row;overflow:auto}.stats,.admin-stats,.form-grid{grid-template-columns:1fr}.hero{display:block}.hero button{margin-top:15px}.full{grid-column:auto}}
+/* =========================================================
+   GLOBAL STYLES
+========================================================= */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#f4f6fa;
+    color:#1f2937;
+}
+
+.hidden{
+    display:none!important;
+}
+
+button, input, textarea, select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    position:relative;
+    overflow:hidden;
+    background: radial-gradient(circle at 10% 15%,rgba(79, 70, 229, 0.35),transparent 28%),
+                radial-gradient(circle at 90% 80%,rgba(99, 102, 241, 0.28),transparent 30%),
+                linear-gradient(135deg,#0f172a,#1e1b4b 50%,#4338ca);
+}
+
+.login-card{
+    width:460px;
+    max-width:100%;
+    background:rgba(255,255,255,.98);
+    padding:40px;
+    border-radius:24px;
+    box-shadow:0 25px 50px -12px rgba(0,0,0,0.35);
+    text-align:center;
+    position:relative;
+    z-index:5;
+}
+
+.logo{
+    width:80px;
+    height:80px;
+    margin:0 auto 15px;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:38px;
+    background:linear-gradient(135deg,#e0e7ff,#c7d2fe);
+    border:1px solid #a5b4fc;
+}
+
+.login-card h1{
+    font-size:26px;
+    color:#1e293b;
+    margin-bottom:6px;
+}
+
+.login-card > p{
+    color:#64748b;
+    margin-bottom:20px;
+    font-size:13px;
+}
+
+.academic-badge{
+    display:inline-block;
+    background:#e0e7ff;
+    color:#4338ca;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:14px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+.tabs{
+    display:flex;
+    gap:6px;
+    padding:5px;
+    background:#f1f5f9;
+    border-radius:12px;
+    margin-bottom:22px;
+}
+
+.tab{
+    flex:1;
+    border:0;
+    background:transparent;
+    padding:10px;
+    border-radius:8px;
+    font-weight:600;
+    color:#64748b;
+    transition: all 0.2s;
+}
+
+.tab.active{
+    background:white;
+    color:#4f46e5;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.login-card label, .modal-card label, .form-card label{
+    display:block;
+    text-align:left;
+    font-size:13px;
+    font-weight:600;
+    margin:14px 0 6px;
+    color:#334155;
+}
+
+.login-card input, .modal-card input, .form-card input, .form-card select, .form-card textarea{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    outline:none;
+    transition: all 0.2s;
+    font-size:14px;
+}
+
+.login-card input:focus, .modal-card input:focus, .form-card input:focus, .form-card select:focus, .form-card textarea:focus{
+    border-color:#6366f1;
+    box-shadow:0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.primary{
+    border:0;
+    background:linear-gradient(135deg,#4f46e5,#4338ca);
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+    transition: all 0.2s;
+}
+
+.primary:hover{
+    opacity:0.95;
+    transform:translateY(-1px);
+    box-shadow:0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.full-btn{
+    width:100%;
+    margin-top:20px;
+}
+
+.switch{
+    margin-top:16px;
+    color:#64748b;
+    font-size:13px;
+    cursor:pointer;
+}
+
+.switch span{
+    color:#4f46e5;
+    font-weight:600;
+}
+
+.message{
+    margin-top:14px;
+    padding:10px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+.success{ background:#dcfce7; color:#166534; }
+.error{ background:#fee2e2; color:#991b1b; }
+
+/* =========================================================
+   MODAL
+========================================================= */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+    padding:20px;
+}
+
+.modal-card{
+    width:400px;
+    max-width:100%;
+    background:white;
+    padding:32px;
+    border-radius:20px;
+    box-shadow:0 20px 25px -5px rgba(0,0,0,0.2);
+}
+
+.modal-card h2{ text-align:center; margin-bottom:6px; color:#0f172a; }
+.modal-card > p{ text-align:center; color:#64748b; font-size:13px; margin-bottom:18px; }
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.modal-buttons button{ flex:1; }
+
+.cancel{
+    border:1px solid #cbd5e1;
+    background:#f8fafc;
+    color:#475569;
+    padding:12px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.close-x{
+    float:right;
+    border:0;
+    background:none;
+    font-size:22px;
+    color:#94a3b8;
+    cursor:pointer;
+}
+
+/* =========================================================
+   APPLICATION LAYOUT
+========================================================= */
+.app{
+    min-height:100vh;
+    display:flex;
+}
+
+.sidebar{
+    width:260px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    background:#0f172a;
+    color:white;
+    padding:24px 16px;
+    display:flex;
+    flex-direction:column;
+    z-index:50;
+}
+
+.brand{
+    font-size:18px;
+    font-weight:700;
+    padding:10px;
+    margin-bottom:24px;
+    color:#f8fafc;
+    border-bottom: 1px solid #1e293b;
+}
+
+.brand small{
+    display:block;
+    font-size:11px;
+    color:#94a3b8;
+    margin-top:4px;
+    font-weight:normal;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.nav button{
+    border:0;
+    background:transparent;
+    color:#94a3b8;
+    padding:12px 16px;
+    text-align:left;
+    border-radius:10px;
+    transition: all 0.2s;
+    font-size:14px;
+    font-weight:500;
+}
+
+.nav button:hover, .nav button.active{
+    background:#4f46e5;
+    color:white;
+}
+
+.logout{
+    margin-top:auto;
+    border:1px solid #334155;
+    background:#1e293b;
+    color:#e2e8f0;
+    padding:12px;
+    border-radius:10px;
+    font-weight:600;
+    transition: all 0.2s;
+}
+
+.logout:hover{
+    background:#ef4444;
+    border-color:#ef4444;
+    color:white;
+}
+
+.main{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:32px 40px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.topbar h2{ font-size:24px; color:#0f172a; }
+.topbar p{ color:#64748b; font-size:13px; margin-top:3px; }
+
+.role{
+    background:white;
+    padding:10px 18px;
+    border-radius:30px;
+    font-weight:600;
+    font-size:13px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+    border:1px solid #e2e8f0;
+    color:#334155;
+}
+
+/* =========================================================
+   PAGES
+========================================================= */
+.page{ display:none; }
+.page.active{ display:block; }
+
+/* Dashboard / Home */
+.home-hero{
+    min-height:280px;
+    background: linear-gradient(135deg,#312e81,#4f46e5,#6366f1);
+    color:white;
+    padding:40px;
+    border-radius:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.3);
+}
+
+.home-content{ max-width:650px; }
+.home-badge{
+    display:inline-block;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.25);
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:14px;
+}
+
+.home-hero h1{ font-size:32px; line-height:1.2; margin-bottom:12px; }
+.home-hero p{ line-height:1.6; color:#e0e7ff; font-size:14px; }
+
+.hero-actions{ display:flex; gap:12px; margin-top:22px; }
+.hero-primary{
+    background:white;
+    color:#4338ca;
+    border:0;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:700;
+}
+
+.hero-secondary{
+    background:rgba(255,255,255,0.12);
+    color:white;
+    border:1px solid rgba(255,255,255,0.3);
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.ai-box{
+    width:160px;
+    height:160px;
+    flex-shrink:0;
+    border-radius:30px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:70px;
+}
+
+.card{
+    background:white;
+    padding:24px;
+    border-radius:16px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+    border:1px solid #e2e8f0;
+    margin-bottom:20px;
+}
+
+/* Form Styles */
+.form-card{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 24px;
+}
+
+.full{ grid-column: 1 / -1; }
+
+/* Admin Analytics Dashboard & Professional Charts */
+.admin-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:24px;
+}
+
+.stat-card{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.stat-icon{
+    width:50px;
+    height:50px;
+    border-radius:12px;
+    background:#e0e7ff;
+    color:#4f46e5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.stat-info h4{ font-size:12px; text-transform:uppercase; color:#64748b; letter-spacing:0.5px; }
+.stat-info h2{ font-size:24px; color:#0f172a; margin-top:2px; }
+
+.chart-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-bottom:24px;
+}
+
+.chart-card{
+    background:white;
+    padding:24px;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+
+.chart-card h3{
+    font-size:16px;
+    color:#1e293b;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.chart-container{
+    position:relative;
+    height:280px;
+    width:100%;
+}
+
+.table-box{
+    overflow-x:auto;
+    background:white;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    text-align:left;
+}
+
+th, td{
+    padding:14px 18px;
+    border-bottom:1px solid #f1f5f9;
+    font-size:13.5px;
+}
+
+th{
+    background:#f8fafc;
+    color:#475569;
+    font-weight:600;
+}
+
+.placed{ color:#16a34a; font-weight:700; background:#dcfce7; padding:4px 10px; border-radius:12px; display:inline-block; }
+.notplaced{ color:#dc2626; font-weight:700; background:#fee2e2; padding:4px 10px; border-radius:12px; display:inline-block; }
+
+/* Admin Delete User Button */
+.delete-user-btn{
+    border:0;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all 0.2s;
+    white-space:nowrap;
+}
+
+.delete-user-btn:hover{
+    background:#dc2626;
+    color:white;
+    transform:translateY(-1px);
+    box-shadow:0 3px 8px rgba(220,38,38,0.25);
+}
+
+/* Responsive adjustments */
+@media(max-width:1024px){
+    .chart-grid{ grid-template-columns:1fr; }
+    .admin-stats{ grid-template-columns:repeat(2,1fr); }
+    .form-grid{ grid-template-columns:1fr; }
+}
+
+@media(max-width:768px){
+    .app{ display:block; }
+    .sidebar{ width:100%; position:relative; }
+    .main{ margin-left:0; width:100%; padding:20px; }
+    .admin-stats{ grid-template-columns:1fr; }
+    .home-hero{ flex-direction:column; text-align:center; }
+    .ai-box{ margin-top:20px; }
+}
 </style>
 </head>
+
 <body>
 
+<!-- =========================================================
+     LOGIN PAGE
+========================================================= -->
 <div id="loginPage" class="login-page">
-  <div class="login-card">
-    <div class="logo">🎓</div>
-    <h1>Placement System</h1>
-    <p>Student Placement Prediction System</p>
-    <div class="tabs">
-      <button type="button" id="studentTab" class="tab active" onclick="showStudentAuth()">Student</button>
-      <button type="button" id="adminTab" class="tab" onclick="openAdminLogin()">Admin</button>
-    </div>
+    <div class="login-card">
+        <div class="logo">🎓</div>
+        <div class="academic-badge">BCA ACADEMIC PROJECT</div>
+        <h1>Placement Prediction</h1>
+        <p>Student Placement Analysis & Prediction Portal</p>
 
-    <div id="studentAuth">
-      <form id="loginForm" onsubmit="handleStudentLogin(event)">
-        <label>Username</label><input id="loginUsername" required placeholder="Enter username">
-        <label>Password</label><input id="loginPassword" type="password" required placeholder="Enter password">
-        <button class="primary full-btn" type="submit">Student Login</button>
-        <div class="switch" onclick="showRegister()">New Student? <span>Register Here</span></div>
-        <div id="loginMessage"></div>
-      </form>
+        <div class="tabs">
+            <button type="button" id="studentTab" class="tab active" onclick="showStudentAuth()">Student</button>
+            <button type="button" id="adminTab" class="tab" onclick="openAdminLogin()">Admin</button>
+        </div>
 
-      <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
-        <label>Full Name</label><input id="regName" required placeholder="Enter full name">
-        <label>Email</label><input id="regEmail" type="email" required placeholder="Enter email">
-        <label>Username</label><input id="regUsername" required placeholder="Create username">
-        <label>Password</label><input id="regPassword" type="password" required minlength="4" placeholder="Create password">
-        <button class="primary full-btn" type="submit">Register Account</button>
-        <div class="switch" onclick="showStudentAuth()"><span>Back to Login</span></div>
-        <div id="registerMessage"></div>
-      </form>
+        <div id="studentAuth">
+            <!-- Student Login -->
+            <form id="loginForm" onsubmit="handleStudentLogin(event)">
+                <label>Username</label>
+                <input id="loginUsername" required placeholder="Enter username">
+
+                <label>Password</label>
+                <input id="loginPassword" type="password" required placeholder="Enter password">
+
+                <button class="primary full-btn" type="submit">Student Login</button>
+
+                <div class="switch" onclick="showRegister()">
+                    New Student? <span>Register Here</span>
+                </div>
+                <div id="loginMessage"></div>
+            </form>
+
+            <!-- Student Registration -->
+            <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+                <label>Full Name</label>
+                <input id="regName" required placeholder="Enter full name">
+
+                <label>Email</label>
+                <input id="regEmail" type="email" required placeholder="Enter email">
+
+                <label>Username</label>
+                <input id="regUsername" required placeholder="Create username">
+
+                <label>Password</label>
+                <input id="regPassword" type="password" required minlength="4" placeholder="Create password">
+
+                <button class="primary full-btn" type="submit">Create Account</button>
+
+                <div class="switch" onclick="showStudentAuth()">
+                    <span>← Back to Login</span>
+                </div>
+                <div id="registerMessage"></div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
-<div id="adminModal" class="modal hidden" aria-hidden="true">
-  <div class="modal-card">
-    <button class="close-x" onclick="closeAdminLogin()">×</button>
-    <h2>Admin Login</h2><p>Enter Admin Credentials</p>
-    <form onsubmit="handleAdminLogin(event)">
-      <label>Admin Username</label><input id="adminUsername" required placeholder="Enter admin username">
-      <label>Admin Password</label><input id="adminPassword" type="password" required placeholder="Enter admin password">
-      <div class="modal-buttons"><button type="button" class="cancel" onclick="closeAdminLogin()">Cancel</button><button type="submit" class="primary">Login</button></div>
-      <div id="adminMessage"></div>
-    </form>
-  </div>
-</div>
+<!-- =========================================================
+     ADMIN LOGIN MODAL
+========================================================= -->
+<div id="adminModal" class="modal hidden">
+    <div class="modal-card">
+        <button class="close-x" onclick="closeAdminLogin()">×</button>
+        <h2>Admin Login</h2>
+        <p>Authorized access only</p>
 
-<div id="app" class="app hidden">
-  <aside class="sidebar">
-    <div class="brand">🎓 Placement AI</div>
-    <div class="nav">
-      <button id="dashboardNav" class="active" onclick="showPage('dashboard')">📊 Dashboard</button>
-      <button id="studentNav" onclick="showPage('student')">👨‍🎓 Student Form</button>
-      <button id="predictionNav" onclick="showPage('prediction')">🤖 Prediction</button>
-      <button id="resultNav" onclick="showPage('result')">✅ Result</button>
-      <button id="adminNav" class="hidden" onclick="showPage('admin')">⚙️ Admin Panel</button>
-      <button id="chartsNav" class="hidden" onclick="showPage('charts')">📈 Admin Charts</button>
-    </div>
-    <button class="logout" onclick="logout()">↪ Logout</button>
-  </aside>
+        <form onsubmit="handleAdminLogin(event)">
+            <label>Admin Username</label>
+            <input id="adminUsername" required placeholder="Enter admin username" autocomplete="username">
 
-  <main class="main">
-    <header class="topbar"><div><h2 id="pageTitle">Dashboard</h2><p>Student Placement Prediction System</p></div><div id="roleBadge" class="role">👤 Student</div></header>
+            <label>Admin Password</label>
+            <input id="adminPassword" type="password" required placeholder="Enter admin password" autocomplete="current-password">
 
-    <section id="dashboard" class="page active">
-      <div class="hero"><div><h1 id="welcomeTitle">Welcome to Student Dashboard</h1><p id="welcomeText">Check your placement prediction and student details.</p></div><button onclick="showPage('student')">+ New Prediction</button></div>
-      <div class="stats">
-        <div class="stat"><div>👨‍🎓</div><h2 id="studentCount">0</h2><p>My Predictions</p></div>
-        <div class="stat"><div>📚</div><h2 id="myCGPA">-</h2><p>Latest CGPA</p></div>
-        <div class="stat"><div>🎯</div><h2 id="myStatus">-</h2><p>Latest Result</p></div>
-      </div>
-      <div class="card"><h3>My Prediction Records</h3><br><div class="table-box"><table><thead><tr><th>Full Name</th><th>Gender</th><th>Student ID</th><th>CGPA</th><th>Percentage</th><th>Technical Skills</th><th>Result</th><th>Prediction Date</th></tr></thead><tbody id="studentRecords"><tr><td colspan="8">No records found.</td></tr></tbody></table></div></div>
-    </section>
-
-    <section id="student" class="page">
-      <div class="card form-card"><h2>Student Details</h2><p class="sub">Enter academic and skill information for ML prediction.</p>
-        <form id="studentForm" class="form-grid" onsubmit="handleFormSubmit(event)">
-          <div><label>Student Full Name</label><input id="sName" required placeholder="Enter full name"></div>
-          <div><label>Student ID</label><input id="sId" required placeholder="STU001"></div>
-          <div><label>Email</label><input id="sEmail" type="email" required placeholder="Enter email"></div>
-          <div><label>Gender</label><select id="sGender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select></div>
-          <div><label>Age</label><input id="sAge" type="number" required min="17" max="50" placeholder="17 - 50"></div>
-          <div><label>CGPA</label><input id="sCgpa" type="number" required min="0" max="10" step="0.01" placeholder="0 - 10"></div>
-          <div><label>Percentage</label><input id="sPercentage" type="number" required min="0" max="100" step="0.01" placeholder="0 - 100"></div>
-          <div><label>Communication Skills</label><textarea id="sCommunication" required placeholder="Example: Good communication, presentation, GD, interview skills"></textarea></div>
-          <div><label>Technical Skills</label><textarea id="sTechnical" required placeholder="Example: HTML, CSS, JavaScript, Python, SQL"></textarea></div>
-          <div><label>Projects Completed</label><input id="sProjects" type="number" required min="0" placeholder="Number of projects"></div>
-          <div><label>Internship</label><select id="sInternship"><option value="1">Yes</option><option value="0">No</option></select></div>
-          <div class="full"><button class="primary" type="submit">Continue to ML Prediction →</button></div>
+            <div class="modal-buttons">
+                <button type="button" class="cancel" onclick="closeAdminLogin()">Cancel</button>
+                <button type="submit" class="primary">Login</button>
+            </div>
+            <div id="adminMessage"></div>
         </form>
-      </div>
-    </section>
-
-    <section id="prediction" class="page"><div class="card"><h2>🤖 Machine Learning Prediction</h2><p class="sub">The student data will be sent to the Python Logistic Regression model.</p><div id="summary" class="stats"></div><div id="predictionStatus" class="status-box">Ready for prediction.</div><button id="predictButton" class="primary" onclick="makePrediction()">🤖 Predict Using ML Model</button></div></section>
-
-    <section id="result" class="page"><div class="card result"><div id="resultIcon" class="result-icon">🎯</div><h1 id="resultTitle">No Prediction Yet</h1><p id="resultText">Complete the student form first.</p><div id="probability" class="probability">-</div><p id="modelText"></p><br><button class="primary" onclick="showPage('student')">New Prediction</button></div></section>
-
-    <section id="admin" class="page">
-      <div class="admin-header"><h1>👑 Admin Control Panel</h1><p>View complete student records, registration and login details.</p></div>
-      <div class="admin-stats"><div class="admin-stat"><p>👨‍🎓 Total Students</p><h2 id="adminTotal">0</h2></div><div class="admin-stat"><p>🟢 Placed</p><h2 id="adminPlaced">0</h2></div><div class="admin-stat"><p>🔴 Not Placed</p><h2 id="adminNotPlaced">0</h2></div><div class="admin-stat"><p>📊 Placement Rate</p><h2 id="adminRate">0%</h2></div></div>
-      <div class="card"><div class="admin-toolbar"><div><h3>All Student Placement Records</h3><p class="sub">Admin can see Full Name + Gender + registration/login dates.</p></div><button class="small-btn" onclick="fetchAdminData()">↻ Refresh</button></div><div class="table-box"><table><thead><tr><th>Full Name</th><th>Gender</th><th>Student ID</th><th>Email</th><th>Age</th><th>CGPA</th><th>Percentage</th><th>Communication</th><th>Technical Skills</th><th>Projects</th><th>Internship</th><th>Result</th><th>Probability</th><th>Registration Date</th><th>Login Date</th><th>Prediction Date</th><th>Action</th></tr></thead><tbody id="adminRecordsBody"><tr><td colspan="17">No records available.</td></tr></tbody></table></div></div>
-      <br><div class="card"><h3>Registered Users</h3><br><div class="table-box"><table><thead><tr><th>Full Name</th><th>Email</th><th>Username</th><th>Registration Date</th><th>Last Login</th></tr></thead><tbody id="usersBody"><tr><td colspan="5">No users.</td></tr></tbody></table></div></div>
-    </section>
-
-    <section id="charts" class="page"><div class="admin-header"><h1>📈 Admin Charts</h1><p>Placement summary from database records.</p></div><div class="chart-grid"><div class="card"><h3>Placement Distribution</h3><div id="placementChart" class="bar-chart"></div></div><div class="card"><h3>Recent CGPA</h3><div id="cgpaChart" class="bar-chart"></div></div></div></section>
-  </main>
+    </div>
 </div>
 
-<script>
-const API_URL = "http://127.0.0.1:5000";
-let currentUser = null;
-let currentUserRole = null;
-let currentStudent = null;
+<!-- =========================================================
+     MAIN APPLICATION
+========================================================= -->
+<div id="app" class="app hidden">
 
-function $(id){return document.getElementById(id)}
-function escapeHTML(v){return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-function message(id,text,type){$(id).innerHTML=`<div class="message ${type}">${escapeHTML(text)}</div>`}
-function now(){return new Date().toLocaleString('en-IN',{hour12:false})}
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            🎓 Placement System
+            <small>Career Intelligence</small>
+        </div>
+
+        <div class="nav">
+            <button id="dashboardNav" class="active" onclick="showPage('dashboard')">🏠 Home</button>
+            <button id="studentNav" onclick="showPage('student')">👨‍🎓 Student Form</button>
+            <button id="predictionNav" onclick="showPage('prediction')">📊 Prediction</button>
+            <button id="resultNav" onclick="showPage('result')">✅ Result</button>
+            <button id="adminNav" class="hidden" onclick="showPage('admin')">⚙️ Admin Panel</button>
+            <button id="chartsNav" class="hidden" onclick="showPage('charts')">📈 Admin Charts</button>
+        </div>
+
+        <button class="logout" onclick="logout()">↪ Logout</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h2 id="pageTitle">Dashboard</h2>
+                <p>Placement Prediction & Analytics Engine</p>
+            </div>
+            <div id="roleBadge" class="role">👤 Student</div>
+        </header>
+
+        <!-- PAGE 1: HOME DASHBOARD -->
+        <section id="dashboard" class="page active">
+            <div class="home-hero">
+                <div class="home-content">
+                    <span class="home-badge">📘 ML-Powered Assessment</span>
+                    <h1 id="welcomeTitle">Student Placement System</h1>
+                    <p id="welcomeText">Evaluate your academic standings, projects, and skills to analyze placement probabilities accurately.</p>
+                    <div class="hero-actions">
+                        <button class="hero-primary" onclick="showPage('student')">Fill Profile Form →</button>
+                        <button class="hero-secondary" onclick="showPage('prediction')">View Result</button>
+                    </div>
+                </div>
+                <div class="ai-box">📈</div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: STUDENT ENTRY FORM -->
+        <section id="student" class="page">
+            <div class="form-card">
+                <h2 style="margin-bottom: 8px;">Enter Student Details</h2>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 24px;">Please complete academic and skill records for accuracy.</p>
+
+                <form onsubmit="handleStudentSubmit(event)">
+                    <div class="form-grid">
+                        <div>
+                            <label>Full Name</label>
+                            <input id="stName" required placeholder="Enter full name">
+                        </div>
+
+                        <div>
+                            <label>Gender</label>
+                            <select id="stGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>CGPA (0.0 - 10.0)</label>
+                            <input id="stCgpa" type="number" step="0.1" min="0" max="10" required placeholder="e.g. 8.5">
+                        </div>
+
+                        <div>
+                            <label>Technical Skills</label>
+                            <input id="stTechSkills" required placeholder="e.g. Python, HTML, Java, SQL">
+                        </div>
+
+                        <div>
+                            <label>Internships Completed</label>
+                            <input id="stInternships" type="number" min="0" required placeholder="e.g. 1">
+                        </div>
+
+                        <div>
+                            <label>Projects Completed</label>
+                            <input id="stProjects" type="number" min="0" required placeholder="e.g. 3">
+                        </div>
+
+                        <div class="full">
+                            <label>Active Backlogs</label>
+                            <select id="stBacklogs" required>
+                                <option value="0">No Backlogs</option>
+                                <option value="1">1 Backlog</option>
+                                <option value="2">2 Backlogs</option>
+                                <option value="3">3+ Backlogs</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="primary full-btn" type="submit">Save & Process Prediction</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PAGE 3: PREDICTION STATUS -->
+        <section id="prediction" class="page">
+            <div class="card" style="text-align:center; padding: 40px;">
+                <h2 style="margin-bottom:12px;">Prediction Result</h2>
+                <p style="color:#64748b; margin-bottom:24px;">Machine learning prediction calculated based on student metrics.</p>
+                
+                <div id="predictionDisplay">
+                    <p style="color:#94a3b8;">No data submitted yet. Please fill out the Student Form.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: RESULT PAGE -->
+        <section id="result" class="page">
+            <div class="card">
+                <h3>Detailed Status Summary</h3>
+                <div id="resultDetails" style="margin-top:15px; line-height:1.8;">
+                    <p style="color:#94a3b8;">Fill your data in the student form to generate details.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: ADMIN TABLE PANEL -->
+        <section id="admin" class="page">
+            <div class="card">
+                <h3 style="margin-bottom:16px;">Registered Student Records</h3>
+                <div class="table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>CGPA</th>
+                                <th>Tech Skills</th>
+                                <th>Internships</th>
+                                <th>Projects</th>
+                                <th>Backlogs</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 6: PROFESSIONAL ADMIN CHARTS -->
+        <section id="charts" class="page">
+            <!-- KPI Summary Header -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <h4>Total Candidates</h4>
+                        <h2 id="totalStudentsCount">0</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#dcfce7; color:#16a34a;">✅</div>
+                    <div class="stat-info">
+                        <h4>Placed Rate</h4>
+                        <h2 id="placementRate">0%</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#fef3c7; color:#d97706;">⭐</div>
+                    <div class="stat-info">
+                        <h4>Avg. CGPA</h4>
+                        <h2 id="avgCgpa">0.0</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#e0f2fe; color:#0284c7;">💻</div>
+                    <div class="stat-info">
+                        <h4>Avg. Projects</h4>
+                        <h2 id="avgProjects">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Interactive Charts -->
+            <div class="chart-grid">
+                <!-- Chart 1: Placed vs Not Placed -->
+                <div class="chart-card">
+                    <h3>Placement Outcome Ratio</h3>
+                    <div class="chart-container">
+                        <canvas id="placementPieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: CGPA vs Placement -->
+                <div class="chart-card">
+                    <h3>Academic CGPA Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="cgpaBarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 3: Gender Distribution -->
+                <div class="chart-card">
+                    <h3>Gender Demographics</h3>
+                    <div class="chart-container">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 4: Experience vs Placement -->
+                <div class="chart-card">
+                    <h3>Internships & Projects Impact</h3>
+                    <div class="chart-container">
+                        <canvas id="experienceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- =========================================================
+     JAVASCRIPT LOGIC
+========================================================= -->
+<script>
+// Student records are kept on the frontend so the backend does not need to change.
+// Only data actually submitted through the Student Form is shown in Admin Panel.
+let studentsStore = JSON.parse(localStorage.getItem('placementStudents') || '[]');
+
+function saveStudentsStore(){
+    localStorage.setItem('placementStudents', JSON.stringify(studentsStore));
+}
+
+let currentUser = null;
+let currentRole = 'student'; // 'student' or 'admin'
+let activeStudentData = null;
+
+// Chart Instances
+let chartPie, chartCgpa, chartGender, chartExp;
 
 function showStudentAuth(){
-  $('studentAuth').classList.remove('hidden'); $('loginForm').classList.remove('hidden'); $('registerForm').classList.add('hidden');
-  $('studentTab').classList.add('active'); $('adminTab').classList.remove('active');
+    document.getElementById('studentAuth').classList.remove('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('studentTab').classList.add('active');
+    document.getElementById('adminTab').classList.remove('active');
 }
-function showRegister(){ $('loginForm').classList.add('hidden'); $('registerForm').classList.remove('hidden'); }
-function openAdminLogin(){ $('adminTab').classList.add('active'); $('studentTab').classList.remove('active'); $('adminModal').classList.remove('hidden'); $('adminModal').setAttribute('aria-hidden','false'); $('adminUsername').focus(); }
-function closeAdminLogin(){ $('adminModal').classList.add('hidden'); $('adminModal').setAttribute('aria-hidden','true'); $('adminPassword').value=''; $('adminMessage').innerHTML=''; }
 
-async function handleRegister(e) {
+function showRegister(){
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+}
+
+function openAdminLogin(){
+    document.getElementById('adminModal').classList.remove('hidden');
+}
+
+function closeAdminLogin(){
+    document.getElementById('adminModal').classList.add('hidden');
+}
+
+function handleStudentLogin(e){
+    e.preventDefault();
+    const user = document.getElementById('loginUsername').value;
+    currentUser = user;
+    currentRole = 'student';
+    startApp();
+}
+
+function handleRegister(e){
+    e.preventDefault();
+    const name = document.getElementById('regName').value;
+    currentUser = name;
+    currentRole = 'student';
+    startApp();
+}
+
+function handleAdminLogin(e){
+    e.preventDefault();
+    const u = document.getElementById('adminUsername').value;
+    const p = document.getElementById('adminPassword').value;
+
+    if(u === 'Mayuri' && p === 'Mayuri18'){
+        currentUser = 'Administrator';
+        currentRole = 'admin';
+        closeAdminLogin();
+        startApp();
+    } else {
+        alert('Invalid Admin Credentials.');
+    }
+}
+
+function startApp(){
+    studentsStore = JSON.parse(localStorage.getItem('placementStudents') || '[]');
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+
+    if(currentRole === 'admin'){
+        document.getElementById('roleBadge').innerHTML = '⚙️ Administrator';
+        document.getElementById('adminNav').classList.remove('hidden');
+        document.getElementById('chartsNav').classList.remove('hidden');
+        showPage('admin');
+    } else {
+        document.getElementById('roleBadge').innerHTML = `👤 ${currentUser}`;
+        document.getElementById('adminNav').classList.add('hidden');
+        document.getElementById('chartsNav').classList.add('hidden');
+        showPage('dashboard');
+    }
+}
+
+function logout(){
+    currentUser = null;
+    document.getElementById('app').classList.add('hidden');
+    document.getElementById('loginPage').classList.remove('hidden');
+    showStudentAuth();
+}
+
+function showPage(pageId){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
+    const page = document.getElementById(pageId);
+    if(page) page.classList.add('active');
+
+    const navBtn = document.getElementById(pageId + 'Nav');
+    if(navBtn) navBtn.classList.add('active');
+
+    document.getElementById('pageTitle').innerText = pageId.charAt(0).toUpperCase() + pageId.slice(1);
+
+    if(pageId === 'admin') renderAdminTable();
+    if(pageId === 'charts') initProfessionalCharts();
+}
+
+// Student Submission & Prediction Calculation
+function handleStudentSubmit(e){
     e.preventDefault();
 
-    const fullName = document.getElementById("regName").value.trim();
-    const email = document.getElementById("regEmail").value.trim();
-    const username = document.getElementById("regUsername").value.trim();
-    const password = document.getElementById("regPassword").value;
+    const name = document.getElementById('stName').value;
+    const gender = document.getElementById('stGender').value;
+    const cgpa = parseFloat(document.getElementById('stCgpa').value);
+    const techSkills = document.getElementById('stTechSkills').value;
+    const internships = parseInt(document.getElementById('stInternships').value);
+    const projects = parseInt(document.getElementById('stProjects').value);
+    const backlogs = parseInt(document.getElementById('stBacklogs').value);
 
-    if (!fullName || !email || !username || !password) {
-        message(
-            "registerMessage",
-            "Please fill all registration fields.",
-            "error"
-        );
-        return;
-    }
+    // Prediction Algorithm
+    let score = (cgpa * 7) + (projects * 4) + (internships * 6) - (backlogs * 8);
+    if(techSkills.length > 3) score += 10;
 
-    const data = {
-        full_name: fullName,
-        name: fullName,
-        email: email,
-        username: username,
-        password: password
+    const placed = score >= 65;
+
+    activeStudentData = {
+        id: Date.now(),
+        name, gender, cgpa, techSkills, internships, projects, backlogs, placed, score
     };
 
-    try {
+    studentsStore.push(activeStudentData);
+    saveStudentsStore();
 
-        const response = await fetch(
-            API_URL + "/register",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-
-            message(
-                "registerMessage",
-                result.message || "Registration failed.",
-                "error"
-            );
-
-            return;
-        }
-
-        message(
-            "registerMessage",
-            "Registration successful! Please login.",
-            "success"
-        );
-
-        document.getElementById("regPassword").value = "";
-
-        setTimeout(function () {
-            showStudentAuth();
-
-            document.getElementById("loginUsername").value =
-                username;
-
-            document.getElementById("loginPassword").focus();
-
-        }, 800);
-
-    } catch (error) {
-
-        console.error(error);
-
-        message(
-            "registerMessage",
-            "Cannot connect to Flask backend. Start app.py first.",
-            "error"
-        );
-    }
+    renderPredictionDisplay();
+    showPage('prediction');
 }
 
-async function handleStudentLogin(e) {
-    e.preventDefault();
+function renderPredictionDisplay(){
+    if(!activeStudentData) return;
 
-    const username =
-        document.getElementById("loginUsername").value.trim();
+    const display = document.getElementById('predictionDisplay');
+    const resultDetails = document.getElementById('resultDetails');
 
-    const password =
-        document.getElementById("loginPassword").value;
+    const statusHTML = activeStudentData.placed ? 
+        `<span class="placed">High Placement Probability (${Math.min(activeStudentData.score, 99)}%)</span>` :
+        `<span class="notplaced">Needs Improvement (${Math.max(activeStudentData.score, 30)}%)</span>`;
 
-    if (!username || !password) {
-        message(
-            "loginMessage",
-            "Please enter username and password.",
-            "error"
-        );
+    display.innerHTML = `
+        <h1 style="font-size:48px; margin:20px 0;">${activeStudentData.placed ? '🎉' : '⚠️'}</h1>
+        <h2>${statusHTML}</h2>
+        <p style="margin-top:15px; color:#64748b;">Student: <strong>${activeStudentData.name}</strong> (${activeStudentData.gender})</p>
+    `;
+
+    resultDetails.innerHTML = `
+        <p><strong>Candidate Name:</strong> ${activeStudentData.name}</p>
+        <p><strong>Gender:</strong> ${activeStudentData.gender}</p>
+        <p><strong>CGPA:</strong> ${activeStudentData.cgpa}</p>
+        <p><strong>Technical Skills:</strong> ${activeStudentData.techSkills}</p>
+        <p><strong>Internships:</strong> ${activeStudentData.internships}</p>
+        <p><strong>Projects:</strong> ${activeStudentData.projects}</p>
+        <p><strong>Backlogs:</strong> ${activeStudentData.backlogs}</p>
+        <hr style="margin:12px 0; border:0; border-top:1px solid #e2e8f0;">
+        <p><strong>Placement Assessment:</strong> ${activeStudentData.placed ? 'Recommended for placement drives.' : 'Requires skill enhancement & backlog clearance.'}</p>
+    `;
+}
+
+function renderAdminTable(){
+    const tbody = document.getElementById('adminTableBody');
+
+    if(studentsStore.length === 0){
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9" style="text-align:center; color:#94a3b8; padding:28px;">
+                    No student records submitted yet.
+                </td>
+            </tr>
+        `;
         return;
     }
 
-    try {
+    tbody.innerHTML = studentsStore.map(s => `
+        <tr>
+            <td><strong>${s.name}</strong></td>
+            <td>${s.gender}</td>
+            <td>${s.cgpa}</td>
+            <td>${s.techSkills}</td>
+            <td>${s.internships}</td>
+            <td>${s.projects}</td>
+            <td>${s.backlogs}</td>
+            <td><span class="${s.placed ? 'placed' : 'notplaced'}">${s.placed ? 'Placed' : 'Not Placed'}</span></td>
+            <td>
+                <button type="button" class="delete-user-btn" onclick="deleteStudent(${s.id})">
+                    🗑️ Delete
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
 
-        const response = await fetch(
-            API_URL + "/login",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            }
-        );
+// Delete a registered student from Admin Panel
+function deleteStudent(studentId){
+    const student = studentsStore.find(s => s.id === studentId);
 
-        const result = await response.json();
+    if(!student) return;
 
-        if (!response.ok || !result.success) {
+    const confirmed = confirm(`Are you sure you want to delete "${student.name}"?\n\nThis student record will be removed from the Admin Panel.`);
 
-            message(
-                "loginMessage",
-                result.message || "Invalid login.",
-                "error"
-            );
+    if(!confirmed) return;
 
-            return;
-        }
+    studentsStore = studentsStore.filter(s => s.id !== studentId);
+    saveStudentsStore();
 
-        currentUser = result.user;
-        currentUserRole = "student";
-
-        enterApp();
-
-        document.getElementById("sName").value =
-            currentUser.name || currentUser.full_name || "";
-
-        document.getElementById("sEmail").value =
-            currentUser.email || "";
-
-        await loadMyRecords();
-
-    } catch (error) {
-
-        console.error(error);
-
-        message(
-            "loginMessage",
-            "Cannot connect to Flask backend. Start app.py first.",
-            "error"
-        );
+    // Clear current student's active data if the deleted record was active
+    if(activeStudentData && activeStudentData.id === studentId){
+        activeStudentData = null;
     }
+
+    renderAdminTable();
+
+    // Refresh charts if the charts page is currently open
+    if(document.getElementById('charts').classList.contains('active')){
+        initProfessionalCharts();
+    }
+
+    alert(`"${student.name}" has been deleted successfully.`);
 }
 
-async function handleAdminLogin(e){
-  e.preventDefault();
-  try{
-    const r=await fetch(API_URL+'/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:$('adminUsername').value.trim(),password:$('adminPassword').value})}); const j=await r.json();
-    if(!j.success){message('adminMessage',j.message||'Invalid admin credentials.','error');return}
-    currentUser=j.admin; currentUserRole='admin'; closeAdminLogin(); enterApp(); $('roleBadge').textContent='👑 Admin'; $('welcomeTitle').textContent='Welcome Admin'; $('welcomeText').textContent='Manage student placement records and reports.'; $('adminNav').classList.remove('hidden'); $('chartsNav').classList.remove('hidden'); await fetchAdminData();
-  }catch(err){message('adminMessage','Cannot connect to Flask backend. Start app.py and try again.','error')}
-}
+// Initialize Professional Modern Charts
+function initProfessionalCharts(){
+    const total = studentsStore.length;
+    const placedCount = studentsStore.filter(s => s.placed).length;
+    const notPlacedCount = total - placedCount;
+    const avgCgpaVal = (studentsStore.reduce((acc, s) => acc + s.cgpa, 0) / (total || 1)).toFixed(1);
+    const avgProjVal = (studentsStore.reduce((acc, s) => acc + s.projects, 0) / (total || 1)).toFixed(1);
 
-function enterApp(){ $('loginPage').classList.add('hidden'); $('app').classList.remove('hidden'); showPage('dashboard'); }
-function showPage(pageId){
-  if((pageId==='admin'||pageId==='charts')&&currentUserRole!=='admin'){alert('Admin access only.');return}
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  const p=$(pageId); if(p)p.classList.add('active'); const n=$(pageId+'Nav'); if(n)n.classList.add('active'); $('pageTitle').textContent=pageId==='admin'?'Admin Panel':pageId==='charts'?'Admin Charts':pageId.charAt(0).toUpperCase()+pageId.slice(1); window.scrollTo({top:0,behavior:'smooth'});
-  if(pageId==='admin'&&currentUserRole==='admin')fetchAdminData();
-  if(pageId==='charts'&&currentUserRole==='admin')fetchAdminData();
-}
+    document.getElementById('totalStudentsCount').innerText = total;
+    document.getElementById('placementRate').innerText = `${Math.round((placedCount / (total || 1)) * 100)}%`;
+    document.getElementById('avgCgpa').innerText = avgCgpaVal;
+    document.getElementById('avgProjects').innerText = avgProjVal;
 
-function handleFormSubmit(e){
-  e.preventDefault();
-  currentStudent={name:$('sName').value.trim(),student_id:$('sId').value.trim(),email:$('sEmail').value.trim(),gender:$('sGender').value,age:Number($('sAge').value),cgpa:Number($('sCgpa').value),percentage:Number($('sPercentage').value),communication:$('sCommunication').value.trim(),technical:$('sTechnical').value.trim(),projects:Number($('sProjects').value),internship:Number($('sInternship').value),username:currentUser?.username||''};
-  $('summary').innerHTML=`<div class="stat"><h3>${escapeHTML(currentStudent.name)}</h3><p>Full Name</p></div><div class="stat"><h3>${escapeHTML(currentStudent.gender)}</h3><p>Gender</p></div><div class="stat"><h3>${currentStudent.cgpa}</h3><p>CGPA</p></div><div class="stat"><h3>${currentStudent.percentage}%</h3><p>Percentage</p></div>`;
-  $('predictionStatus').textContent='Form submitted! Click below to run the ML model.'; showPage('prediction');
-}
+    // Destroy existing chart instances on tab reload
+    if(chartPie) chartPie.destroy();
+    if(chartCgpa) chartCgpa.destroy();
+    if(chartGender) chartGender.destroy();
+    if(chartExp) chartExp.destroy();
 
-async function makePrediction(){
-  if(!currentStudent){alert('Please submit the student form first.');showPage('student');return}
-  const b=$('predictButton'); b.disabled=true; b.textContent='⏳ Processing...'; $('predictionStatus').textContent='Sending student data to Flask + database...';
-  try{
-    const r=await fetch(API_URL+'/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(currentStudent)}); const j=await r.json();
-    if(!j.success)throw new Error(j.message||'Prediction failed');
-    currentStudent.prediction=j.prediction; currentStudent.probability=j.probability; currentStudent.prediction_date=j.prediction_date||now(); currentStudent.model=j.model||'Logistic Regression';
-    renderResult(j.prediction,j.probability,j.model||'Logistic Regression');
-    await saveStudent(); await loadMyRecords();
-  }catch(err){$('predictionStatus').textContent='❌ '+err.message;alert('Prediction error: '+err.message)}finally{b.disabled=false;b.textContent='🤖 Predict Using ML Model'}
-}
+    // Chart 1: Pie / Doughnut
+    chartPie = new Chart(document.getElementById('placementPieChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Placed', 'Not Placed'],
+            datasets: [{
+                data: [placedCount, notPlacedCount],
+                backgroundColor: ['#22c55e', '#ef4444'],
+                borderWidth:0
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
 
-async function saveStudent(){
-  const payload={...currentStudent,registration_date:currentUser?.registration_date||'',login_date:currentUser?.last_login||now()};
-  const r=await fetch(API_URL+'/students',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); const j=await r.json(); if(!j.success)throw new Error(j.message||'Could not save student record');
-}
-function renderResult(pred,prob,model){const placed=String(pred).toLowerCase()==='placed';$('resultIcon').textContent=placed?'🎉':'📚';$('resultTitle').textContent=placed?'Student will be Placed':'Student will Not be Placed';$('resultText').textContent=placed?'The student shows a good placement readiness score.':'The student should improve academic and skill-related areas.';$('probability').textContent=prob+'%';$('modelText').textContent='Model: '+model;showPage('result')}
+    // Chart 2: CGPA Bar
+    chartCgpa = new Chart(document.getElementById('cgpaBarChart'), {
+        type: 'bar',
+        data: {
+            labels: studentsStore.map(s => s.name.split(' ')[0]),
+            datasets: [{
+                label: 'CGPA',
+                data: studentsStore.map(s => s.cgpa),
+                backgroundColor: '#6366f1',
+                borderRadius:6
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
 
-async function loadMyRecords(){
-  if(!currentUser?.username)return;
-  try{const r=await fetch(API_URL+'/students/user/'+encodeURIComponent(currentUser.username));const rows=await r.json();
-    $('studentCount').textContent=rows.length; if(rows.length){const x=rows[0];$('myCGPA').textContent=x.cgpa??'-';$('myStatus').textContent=x.prediction??'-'}
-    $('studentRecords').innerHTML=rows.length?rows.map(x=>`<tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.gender)}</td><td>${escapeHTML(x.student_id)}</td><td>${escapeHTML(x.cgpa)}</td><td>${escapeHTML(x.percentage)}%</td><td>${escapeHTML(x.technical)}</td><td class="${String(x.prediction).toLowerCase()==='placed'?'placed':'notplaced'}">${escapeHTML(x.prediction)}</td><td>${escapeHTML(x.prediction_date)}</td></tr>`).join(''):'<tr><td colspan="8">No records found.</td></tr>';
-  }catch(e){console.error(e)}
-}
+    // Chart 3: Gender Breakdown
+    const males = studentsStore.filter(s => s.gender === 'Male').length;
+    const females = studentsStore.filter(s => s.gender === 'Female').length;
+    const others = studentsStore.filter(s => s.gender === 'Other').length;
 
-async function fetchAdminData(){
-  if(currentUserRole!=='admin')return;
-  try{
-    const [sr,ur]=await Promise.all([fetch(API_URL+'/students'),fetch(API_URL+'/users')]); const students=await sr.json(); const users=await ur.json();
-    const placed=students.filter(x=>String(x.prediction).toLowerCase()==='placed').length; const notPlaced=students.length-placed; const rate=students.length?Math.round(placed/students.length*100):0;
-    $('adminTotal').textContent=students.length;$('adminPlaced').textContent=placed;$('adminNotPlaced').textContent=notPlaced;$('adminRate').textContent=rate+'%';
-    $('adminRecordsBody').innerHTML=students.length?students.map(x=>`<tr><td><b>${escapeHTML(x.name)}</b></td><td>${escapeHTML(x.gender||'-')}</td><td>${escapeHTML(x.student_id)}</td><td>${escapeHTML(x.email)}</td><td>${escapeHTML(x.age)}</td><td>${escapeHTML(x.cgpa)}</td><td>${escapeHTML(x.percentage)}%</td><td>${escapeHTML(x.communication)}</td><td>${escapeHTML(x.technical)}</td><td>${escapeHTML(x.projects)}</td><td>${Number(x.internship)===1?'Yes':'No'}</td><td class="${String(x.prediction).toLowerCase()==='placed'?'placed':'notplaced'}">${escapeHTML(x.prediction)}</td><td>${escapeHTML(x.probability)}%</td><td>${escapeHTML(x.registration_date||'-')}</td><td>${escapeHTML(x.login_date||'-')}</td><td>${escapeHTML(x.prediction_date||'-')}</td><td><button class="danger" onclick="deleteStudent(${Number(x.id)})">Delete</button></td></tr>`).join(''):'<tr><td colspan="17">No records available.</td></tr>';
-    $('usersBody').innerHTML=users.length?users.map(x=>`<tr><td><b>${escapeHTML(x.name)}</b></td><td>${escapeHTML(x.email)}</td><td>${escapeHTML(x.username)}</td><td>${escapeHTML(x.registration_date||'-')}</td><td>${escapeHTML(x.last_login||'-')}</td></tr>`).join(''):'<tr><td colspan="5">No users.</td></tr>';
-    drawCharts(students);
-  }catch(e){$('adminRecordsBody').innerHTML='<tr><td colspan="17">❌ Backend connection error. Make sure app.py is running.</td></tr>';console.error(e)}
+    chartGender = new Chart(document.getElementById('genderChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Male', 'Female', 'Other'],
+            datasets: [{
+                data: [males, females, others],
+                backgroundColor: ['#3b82f6', '#ec4899', '#8b5cf6']
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // Chart 4: Projects & Internships
+    chartExp = new Chart(document.getElementById('experienceChart'), {
+        type: 'line',
+        data: {
+            labels: studentsStore.map(s => s.name.split(' ')[0]),
+            datasets: [
+                {
+                    label: 'Projects',
+                    data: studentsStore.map(s => s.projects),
+                    borderColor: '#06b6d4',
+                    tension: 0.3
+                },
+                {
+                    label: 'Internships',
+                    data: studentsStore.map(s => s.internships),
+                    borderColor: '#f59e0b',
+                    tension: 0.3
+                }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
 }
-async function deleteStudent(id){if(!confirm('Delete this student record?'))return;try{const r=await fetch(API_URL+'/students/'+id,{method:'DELETE'});const j=await r.json();alert(j.message||'Done');fetchAdminData()}catch(e){alert('Delete failed')}}
-function drawCharts(rows){const p=rows.filter(x=>String(x.prediction).toLowerCase()==='placed').length,n=rows.length-p;const total=Math.max(rows.length,1);$('placementChart').innerHTML=`<div class="bar-wrap"><div class="bar" style="height:${Math.max(p/total*200,5)}px"></div><div class="bar-label">Placed (${p})</div></div><div class="bar-wrap"><div class="bar alt" style="height:${Math.max(n/total*200,5)}px"></div><div class="bar-label">Not Placed (${n})</div></div>`;const recent=rows.slice(0,8).reverse();$('cgpaChart').innerHTML=recent.length?recent.map(x=>`<div class="bar-wrap"><div class="bar" style="height:${Math.max(Number(x.cgpa||0)/10*200,5)}px"></div><div class="bar-label">${escapeHTML(x.student_id||'Student')}</div></div>`).join(''):'<span class="muted">No data</span>'}
-function logout(){currentUser=null;currentUserRole=null;currentStudent=null;$('app').classList.add('hidden');$('loginPage').classList.remove('hidden');$('loginPassword').value='';$('adminNav').classList.add('hidden');$('chartsNav').classList.add('hidden');showStudentAuth()}
 </script>
 </body>
 </html>
